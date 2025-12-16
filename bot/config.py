@@ -18,7 +18,8 @@ logger = logging.getLogger('claude-code-bot')
 
 # Telegram configuration
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-ALLOWED_USER_ID = int(os.getenv('ALLOWED_USER_ID', '0'))
+_allowed_user_id = os.getenv('ALLOWED_USER_ID', '').strip()
+ALLOWED_USER_ID = int(_allowed_user_id) if _allowed_user_id.isdigit() else None
 
 # Database configuration
 DB_CONFIG = {
