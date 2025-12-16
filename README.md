@@ -4,7 +4,9 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-🤖 Control Claude Code CLI through Telegram. Execute commands, analyze files, and manage your server directly from your phone.
+**English** | [Русский](README.ru.md)
+
+Control Claude Code CLI through Telegram. Execute commands, analyze files, and manage your server directly from your phone.
 
 ## ✨ Features
 
@@ -29,7 +31,7 @@
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/claude-code-bot.git
+git clone https://github.com/gmen1057/claude-code-bot.git
 cd claude-code-bot
 ```
 
@@ -300,5 +302,5 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## 📞 Support
 
-- **Issues:** [GitHub Issues](https://github.com/yourusername/claude-code-bot/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yourusername/claude-code-bot/discussions)
+- **Issues:** [GitHub Issues](https://github.com/gmen1057/claude-code-bot/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/gmen1057/claude-code-bot/discussions)
