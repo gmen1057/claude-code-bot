@@ -42,7 +42,6 @@ def close_pool():
 @contextmanager
 def get_connection():
     """Get a connection from the pool"""
-    global _pool
     if _pool is None:
         init_pool()
 
