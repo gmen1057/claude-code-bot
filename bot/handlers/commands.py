@@ -3,14 +3,15 @@ Command handlers for Telegram bot
 """
 
 import os
+
 from telegram import Update
-from telegram.ext import ContextTypes
 from telegram.constants import ParseMode
+from telegram.ext import ContextTypes
 
 from bot.config import ALLOWED_USER_ID, logger
-from bot.services.session import session_manager, get_command_history
-from bot.services.formatter import format_status, format_history, escape_html
 from bot.services.claude import cancel_process, has_active_process
+from bot.services.formatter import escape_html, format_history, format_status
+from bot.services.session import get_command_history, session_manager
 
 
 def check_access(user_id: int) -> bool:

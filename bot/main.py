@@ -2,28 +2,28 @@
 Claude Code Telegram Bot - Main Entry Point
 """
 
-import signal
 import asyncio
+import signal
+
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
-from bot.config import TELEGRAM_TOKEN, validate_config, logger
-from bot.database.pool import init_pool, init_database, close_pool
-from bot.services.claude import terminate_all_processes
-from bot.services.session import session_manager
+from bot.config import TELEGRAM_TOKEN, logger, validate_config
+from bot.database.pool import close_pool, init_database, init_pool
 from bot.handlers.commands import (
-    cmd_start,
-    cmd_reset,
-    cmd_status,
-    cmd_context,
-    cmd_history,
     cmd_cancel,
     cmd_cd,
+    cmd_context,
     cmd_help,
+    cmd_history,
+    cmd_reset,
+    cmd_start,
+    cmd_status,
 )
-from bot.handlers.messages import handle_message
 from bot.handlers.files import handle_file
-
+from bot.handlers.messages import handle_message
+from bot.services.claude import terminate_all_processes
+from bot.services.session import session_manager
 
 # Flag for graceful shutdown
 _shutdown_event = asyncio.Event()

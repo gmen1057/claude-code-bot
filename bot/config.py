@@ -2,9 +2,10 @@
 Configuration module for Claude Code Bot
 """
 
-import os
 import logging
+import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Load environment variables

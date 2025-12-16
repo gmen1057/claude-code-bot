@@ -4,16 +4,16 @@ Claude CLI executor service with safe invocation
 
 import asyncio
 import time
-from typing import Optional, Tuple, Callable, Dict, List
 from dataclasses import dataclass
 from enum import Enum
+from typing import Callable, Dict, List, Optional, Tuple
 
 from bot.config import (
-    logger,
     CLAUDE_CLI_PATH,
-    CLAUDE_TIMEOUT,
     CLAUDE_MAX_CONTEXT_MESSAGES,
+    CLAUDE_TIMEOUT,
     DEFAULT_WORKING_DIR,
+    logger,
 )
 
 

@@ -3,12 +3,12 @@ Session management service
 """
 
 import json
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
-from typing import Optional, Dict, Any, List
-from dataclasses import dataclass, field, asdict
+from typing import Any, Dict, List, Optional
 
-from bot.config import logger, DEFAULT_WORKING_DIR
-from bot.database.pool import execute_query, execute_one, get_cursor
+from bot.config import DEFAULT_WORKING_DIR, logger
+from bot.database.pool import execute_one, execute_query, get_cursor
 
 
 @dataclass

@@ -2,13 +2,14 @@
 Database connection pool for PostgreSQL
 """
 
+from contextlib import contextmanager
+from typing import Any, Dict, Optional
+
 import psycopg2
 from psycopg2 import pool
 from psycopg2.extras import RealDictCursor
-from contextlib import contextmanager
-from typing import Optional, Dict, Any
 
-from bot.config import DB_CONFIG, DB_POOL_MIN, DB_POOL_MAX, logger
+from bot.config import DB_CONFIG, DB_POOL_MAX, DB_POOL_MIN, logger
 
 # Global connection pool
 _pool: Optional[pool.ThreadedConnectionPool] = None

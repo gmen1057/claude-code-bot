@@ -3,13 +3,13 @@ Message handler for processing text messages
 """
 
 from telegram import Update
-from telegram.ext import ContextTypes
 from telegram.constants import ParseMode
+from telegram.ext import ContextTypes
 
 from bot.config import ALLOWED_USER_ID, logger
-from bot.services.session import session_manager, log_command
-from bot.services.claude import execute_claude, ExecutionStatus
-from bot.services.formatter import format_for_telegram, format_error
+from bot.services.claude import ExecutionStatus, execute_claude
+from bot.services.formatter import format_error, format_for_telegram
+from bot.services.session import log_command, session_manager
 
 
 def check_access(user_id: int) -> bool:
