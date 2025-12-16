@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black flake8 isort mypy
+          pip install -r requirements.txt
+
+      - name: Check formatting with Black
+        run: black --check --diff bot/
+
+      - name: Check imports with isort
+        run: isort --check-only --diff bot/
+
+      - name: Lint with flake8
+        run: |
+          # Stop build on syntax errors or undefined names
+          flake8 bot/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Treat all other issues as warnings
+          flake8 bot/ --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
+
+  syntax-check:
+    name: Syntax Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check Python syntax
+        run: |
+          python -m py_compile bot/main.py
+          python -m py_compile bot/config.py
+          python -m py_compile bot/handlers/commands.py
+          python -m py_compile bot/handlers/messages.py
+          python -m py_compile bot/handlers/files.py
+          python -m py_compile bot/services/claude.py
+          python -m py_compile bot/services/session.py
+          python -m py_compile bot/services/formatter.py
+          python -m py_compile bot/database/pool.py
+
+  security:
+    name: Security Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install bandit safety
+          pip install -r requirements.txt
+
+      - name: Run Bandit security linter
+        run: bandit -r bot/ -ll -ii
+
+      - name: Check dependencies for vulnerabilities
+        run: safety check -r requirements.txt --ignore=70612
+        continue-on-error: true
+
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t claude-code-bot:test .
+
+      - name: Verify image was created
+        run: docker images claude-code-bot:test

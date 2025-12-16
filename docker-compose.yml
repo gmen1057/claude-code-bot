@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: claude-code-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+    volumes:
+      - ./user_files:/app/user_files
+      # Mount Claude config if needed
+      - ~/.claude:/root/.claude:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - claude-bot-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: claude-code-bot-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-claude_code_bot}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - claude-bot-network
+
+volumes:
+  postgres_data:
+
+networks:
+  claude-bot-network:
+    driver: bridge
